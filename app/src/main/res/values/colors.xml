@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ad2b2d</color>
+    <color name="colorPrimaryDark">#770005</color>
+    <color name="colorAccent">#e55e56</color>
+
+    <color name="colorSecondary">#e3d9b7</color>
+    <color name="colorSecondaryDark">#b1a887</color>
+    <color name="colorSecondaryAccent">#ffffe9</color>
+
+    <color name="colorItemCivilization">#f8f5e8</color>
+
+    <color name="white">#ffffff</color>
+
+</resources>
