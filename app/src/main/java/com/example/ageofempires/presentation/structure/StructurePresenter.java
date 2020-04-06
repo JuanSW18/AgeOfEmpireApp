@@ -15,10 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 public class StructurePresenter implements StructureContract.Presenter {
 
     private StructureContract.View view;
-    private MemoryCache memoryCache;
 
-    public StructurePresenter(MemoryCache memoryCache) {
-        this.memoryCache = memoryCache;
+    public StructurePresenter() {
     }
 
     public StructureContract.View getView() {
@@ -59,7 +57,7 @@ public class StructurePresenter implements StructureContract.Presenter {
                         if( isAttached() ){
                             Log.d("** CALLING_SERVICE **", "structure");
                             getView().setStructureList(structureResponse.getStructures());
-                            memoryCache.setStructureList(structureResponse.getStructures());
+                            MemoryCache.setStructureList(structureResponse.getStructures());
                             getView().hideLoadingDialog();
                         }
                     }

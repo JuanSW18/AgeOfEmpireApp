@@ -15,10 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 public class UnitPresenter implements UnitContract.Presenter {
 
     private UnitContract.View view;
-    private MemoryCache memoryCache;
 
-    public UnitPresenter(MemoryCache memoryCache) {
-        this.memoryCache = memoryCache;
+    public UnitPresenter() {
     }
 
     public UnitContract.View getView() {
@@ -59,7 +57,7 @@ public class UnitPresenter implements UnitContract.Presenter {
                         if( isAttached() ){
                             Log.d("** CALLING_SERVICE **", "unit");
                             getView().setUnitList(unitsResponse.getUnits());
-                            memoryCache.setUnitList(unitsResponse.getUnits());
+                            MemoryCache.setUnitList(unitsResponse.getUnits());
                             getView().hideLoadingDialog();
                         }
                     }

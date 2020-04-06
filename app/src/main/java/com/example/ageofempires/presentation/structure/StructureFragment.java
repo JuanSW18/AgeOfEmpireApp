@@ -22,7 +22,6 @@ import java.util.List;
 
 public class StructureFragment extends Fragment implements StructureContract.View {
 
-    private MemoryCache memoryCache;
     private StructureContract.Presenter presenter;
     private FragmentCallback fragmentCallback;
     private RecyclerView structureRecycler;
@@ -32,17 +31,12 @@ public class StructureFragment extends Fragment implements StructureContract.Vie
         this.fragmentCallback = fragmentCallback;
     }
 
-    public StructureFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
-        this.fragmentCallback = fragmentCallback;
-        this.memoryCache = memoryCache;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if ( presenter == null ){
-            presenter = new StructurePresenter(memoryCache);
+            presenter = new StructurePresenter();
             getPresenter().onViewAttach(StructureFragment.this);
         }
 
@@ -55,11 +49,11 @@ public class StructureFragment extends Fragment implements StructureContract.Vie
 
         structureRecycler = view.findViewById(R.id.recyclerStructure);
 
-        if( memoryCache.getStructureList() == null ){
+        if( MemoryCache.getStructureList() == null ){
             getPresenter().getStructureList();
         }else {
             Log.d("MEMORY_CACHE", "using structure list");
-            setStructureList(memoryCache.getStructureList());
+            setStructureList(MemoryCache.getStructureList());
         }
 
         return view;

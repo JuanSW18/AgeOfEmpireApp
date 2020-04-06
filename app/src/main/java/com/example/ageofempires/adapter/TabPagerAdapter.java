@@ -18,12 +18,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
     private static int NUMBER_OF_TABS = 4;
     private FragmentCallback fragmentCallback;
-    private MemoryCache memoryCache;
 
-    public TabPagerAdapter(@NonNull FragmentManager fm, FragmentCallback fragmentCallback, MemoryCache memoryCache) {
+    public TabPagerAdapter(@NonNull FragmentManager fm, FragmentCallback fragmentCallback) {
         super(fm);
         this.fragmentCallback = fragmentCallback;
-        this.memoryCache = memoryCache;
     }
 
     @NonNull
@@ -31,13 +29,13 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch ( position ){
             case 0:
-                return new CivilizationFragment(fragmentCallback, memoryCache);
+                return new CivilizationFragment(fragmentCallback);
             case 1:
-                return new UnitFragment(fragmentCallback, memoryCache);
+                return new UnitFragment(fragmentCallback);
             case 2:
-                return new StructureFragment(fragmentCallback, memoryCache);
+                return new StructureFragment(fragmentCallback);
             case 3:
-                return new TechnologyFragment(fragmentCallback, memoryCache);
+                return new TechnologyFragment(fragmentCallback);
             default:
                 return null;
         }

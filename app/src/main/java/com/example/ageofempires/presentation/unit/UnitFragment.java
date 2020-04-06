@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class UnitFragment extends Fragment implements UnitContract.View {
 
-    private MemoryCache memoryCache;
     private FragmentCallback fragmentCallback;
     private UnitPresenter presenter;
     private UnitAdapter unitAdapter;
@@ -31,17 +30,12 @@ public class UnitFragment extends Fragment implements UnitContract.View {
         this.fragmentCallback = fragmentCallback;
     }
 
-    public UnitFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
-        this.fragmentCallback = fragmentCallback;
-        this.memoryCache = memoryCache;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new UnitPresenter(memoryCache);
+            presenter = new UnitPresenter();
             getPresenter().onViewAttach(UnitFragment.this);
         }
     }
@@ -57,11 +51,11 @@ public class UnitFragment extends Fragment implements UnitContract.View {
 
         recyclerUnit = view.findViewById(R.id.recyclerUnit);
 
-        if( memoryCache.getUnitList() == null ){
+        if( MemoryCache.getUnitList() == null ){
             getPresenter().getUnitList();
         }else {
             Log.d("MEMORY_CACHE", "using unit list");
-            setUnitList(memoryCache.getUnitList());
+            setUnitList(MemoryCache.getUnitList());
         }
 
         return view;

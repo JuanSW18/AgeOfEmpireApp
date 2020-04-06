@@ -4,43 +4,43 @@ import java.util.List;
 
 public class MemoryCache {
 
-    private List<Civilization> civilizationList;
-    private List<Unit> unitList;
-    private List<Structure> structureList;
-    private List<Technology> technologyList;
+    private static List<Civilization> civilizationList;
+    private static List<Unit> unitList;
+    private static List<Structure> structureList;
+    private static List<Technology> technologyList;
 
     public MemoryCache() {
     }
 
-    public List<Civilization> getCivilizationList() {
+    public static List<Civilization> getCivilizationList() {
         return civilizationList;
     }
 
-    public void setCivilizationList(List<Civilization> civilizationList) {
-        this.civilizationList = civilizationList;
-    }
-
-    public List<Unit> getUnitList() {
+    public static List<Unit> getUnitList() {
         return unitList;
     }
 
-    public void setUnitList(List<Unit> unitList) {
-        this.unitList = unitList;
-    }
-
-    public List<Structure> getStructureList() {
+    public static List<Structure> getStructureList() {
         return structureList;
     }
 
-    public void setStructureList(List<Structure> structureList) {
-        this.structureList = structureList;
-    }
-
-    public List<Technology> getTechnologyList() {
+    public static List<Technology> getTechnologyList() {
         return technologyList;
     }
 
-    public void setTechnologyList(List<Technology> technologyList) {
-        this.technologyList = technologyList;
+    public static void setCivilizationList(List<Civilization> civilizationList) {
+        MemoryCache.civilizationList = civilizationList;
+    }
+
+    public static void setUnitList(List<Unit> unitList) {
+        MemoryCache.unitList = unitList;
+    }
+
+    public static void setStructureList(List<Structure> structureList) {
+        MemoryCache.structureList = structureList;
+    }
+
+    public static void setTechnologyList(List<Technology> technologyList) {
+        MemoryCache.technologyList = technologyList;
     }
 }

@@ -20,7 +20,6 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
 
     private Context context;
     private ProgressDialog mProgressDialog;
-    private MemoryCache memoryCache;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -32,14 +31,12 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
 
         context = this;
 
-        memoryCache = new MemoryCache();
-
         mProgressDialog = new ProgressDialog(context);
         mProgressDialog.setMessage(getText(R.string.default_loading_text));
         mProgressDialog.setCancelable(false);
 
         //setFragments();
-        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, memoryCache);
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
         mViewPager = findViewById(R.id.viewPagerMenu);
         mViewPager.setAdapter(tabPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

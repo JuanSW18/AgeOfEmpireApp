@@ -22,7 +22,6 @@ import java.util.List;
 
 public class TechnologyFragment extends Fragment implements TechnologyContract.View {
 
-    private MemoryCache memoryCache;
     private TechnologyContract.Presenter presenter;
     private FragmentCallback fragmentCallback;
     private TechnologyAdapter technologyAdapter;
@@ -32,17 +31,12 @@ public class TechnologyFragment extends Fragment implements TechnologyContract.V
         this.fragmentCallback = fragmentCallback;
     }
 
-    public TechnologyFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
-        this.fragmentCallback = fragmentCallback;
-        this.memoryCache = memoryCache;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new TechnologyPresenter(memoryCache);
+            presenter = new TechnologyPresenter();
             getPresenter().onViewAttach(TechnologyFragment.this);
         }
 
@@ -55,11 +49,11 @@ public class TechnologyFragment extends Fragment implements TechnologyContract.V
 
         technologyRecycler = view.findViewById(R.id.recyclerTechnology);
 
-        if( memoryCache.getTechnologyList() == null ){
+        if( MemoryCache.getTechnologyList() == null ){
             getPresenter().getTechnologyList();
         }else {
             Log.d("MEMORY_CACHE", "using technology list");
-            setTechnologyList(memoryCache.getTechnologyList());
+            setTechnologyList(MemoryCache.getTechnologyList());
         }
 
         return view;

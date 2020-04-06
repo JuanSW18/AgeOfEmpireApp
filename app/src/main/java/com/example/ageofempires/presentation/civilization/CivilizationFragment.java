@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CivilizationFragment extends Fragment implements CivilizationContract.View{
 
-    private MemoryCache memoryCache;
-
     private FragmentCallback fragmentCallback;
     private CivilizationPresenter presenter;
     private CivilizationAdapter civilizationAdapter;
@@ -32,17 +30,12 @@ public class CivilizationFragment extends Fragment implements CivilizationContra
         this.fragmentCallback = fragmentCallback;
     }
 
-    public CivilizationFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
-        this.fragmentCallback = fragmentCallback;
-        this.memoryCache = memoryCache;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new CivilizationPresenter(memoryCache);
+            presenter = new CivilizationPresenter();
             getPresenter().onViewAttach(CivilizationFragment.this);
         }
     }
@@ -59,11 +52,11 @@ public class CivilizationFragment extends Fragment implements CivilizationContra
 
         recyclerCivilization = view.findViewById(R.id.recyclerCivilization);
 
-        if( memoryCache.getCivilizationList() == null ){
+        if( MemoryCache.getCivilizationList() == null ){
             getPresenter().getCivilizationList();
         }else {
             Log.d("MEMORY_CACHE", "using civilization list");
-            setCivilizationList(memoryCache.getCivilizationList());
+            setCivilizationList(MemoryCache.getCivilizationList());
         }
 
         return view;

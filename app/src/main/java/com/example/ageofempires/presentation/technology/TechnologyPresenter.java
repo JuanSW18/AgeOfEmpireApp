@@ -15,10 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 public class TechnologyPresenter implements TechnologyContract.Presenter {
 
     private TechnologyContract.View view;
-    private MemoryCache memoryCache;
 
-    public TechnologyPresenter(MemoryCache memoryCache) {
-        this.memoryCache = memoryCache;
+    public TechnologyPresenter() {
     }
 
     public TechnologyContract.View getView() {
@@ -59,7 +57,7 @@ public class TechnologyPresenter implements TechnologyContract.Presenter {
                         if ( isAttached() ){
                             Log.d("** CALLING_SERVICE **", "technology");
                             getView().setTechnologyList(technologyResponse.getTechnologies());
-                            memoryCache.setTechnologyList(technologyResponse.getTechnologies());
+                            MemoryCache.setTechnologyList(technologyResponse.getTechnologies());
                             getView().hideLoadingDialog();
                         }
                     }

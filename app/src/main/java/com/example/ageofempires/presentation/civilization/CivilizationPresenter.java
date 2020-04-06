@@ -20,10 +20,8 @@ import io.reactivex.schedulers.Schedulers;
 public class CivilizationPresenter implements CivilizationContract.Presenter {
 
     private CivilizationContract.View view;
-    private MemoryCache memoryCache;
 
-    public CivilizationPresenter(MemoryCache memoryCache) {
-        this.memoryCache = memoryCache;
+    public CivilizationPresenter() {
     }
 
     @Nullable
@@ -65,8 +63,8 @@ public class CivilizationPresenter implements CivilizationContract.Presenter {
                     public void onSuccess(CivilizationResponse civilizationResponse) {
                         if( isAttached() ){
                             Log.d("** CALLING_SERVICE **", "civilization");
+                            MemoryCache.setCivilizationList(civilizationResponse.getCivilizations());
                             getView().setCivilizationList(civilizationResponse.getCivilizations());
-                            memoryCache.setCivilizationList(civilizationResponse.getCivilizations());
                             getView().hideLoadingDialog();
                         }
                     }
