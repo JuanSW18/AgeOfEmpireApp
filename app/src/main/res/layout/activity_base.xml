@@ -8,17 +8,31 @@
     android:background="@drawable/background_aoe"
     tools:context=".core.BaseActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/base_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabMainDishes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            style="@style/MyTabLayout"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingEnd="-1dp"/>
 
-        </FrameLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/base_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        </FrameLayout>-->
 
     </LinearLayout>
 

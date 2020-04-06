@@ -1,4 +1,4 @@
-package com.example.ageofempires.presentation.main;
+package com.example.ageofempires.presentation.civilization;
 
 import android.util.Log;
 
@@ -16,16 +16,16 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomePresenter implements HomeContract.Presenter {
+public class CivilizationPresenter implements CivilizationContract.Presenter {
 
-    private HomeContract.View view;
+    private CivilizationContract.View view;
 
-    public HomePresenter() {
+    public CivilizationPresenter() {
 
     }
 
     @Nullable
-    private HomeContract.View getView() {
+    private CivilizationContract.View getView() {
         return view;
     }
 
@@ -35,7 +35,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void onViewAttach(HomeContract.View view) {
+    public void onViewAttach(CivilizationContract.View view) {
         this.view = view;
     }
 

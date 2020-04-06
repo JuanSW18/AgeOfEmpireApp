@@ -3,19 +3,25 @@ package com.example.ageofempires.core;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.example.ageofempires.R;
+import com.example.ageofempires.adapter.TabPagerAdapter;
 import com.example.ageofempires.interfaces.FragmentCallback;
-import com.example.ageofempires.presentation.main.HomeFragment;
+import com.example.ageofempires.presentation.civilization.CivilizationFragment;
+import com.google.android.material.tabs.TabLayout;
 
 public class BaseActivity extends AppCompatActivity implements FragmentCallback {
 
     private Context context;
     private ProgressDialog mProgressDialog;
+
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +34,30 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
         mProgressDialog.setMessage(getText(R.string.default_loading_text));
         mProgressDialog.setCancelable(false);
 
-        setFragments();
+        //setFragments();
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+        mViewPager = findViewById(R.id.viewPagerMenu);
+        mViewPager.setAdapter(tabPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mViewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mTabLayout = findViewById(R.id.tabMainDishes);
+        mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     @Override
@@ -37,16 +66,16 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
         super.onDestroy();
     }
 
-    public void setFragments(){
+    /*public void setFragments(){
         FragmentManager fragmentManager;
         FragmentTransaction fragmentTransaction;
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        HomeFragment homeFragment = new HomeFragment(this);
-        fragmentTransaction.replace(R.id.base_content, homeFragment);
+        CivilizationFragment civilizationFragment = new CivilizationFragment(this);
+        fragmentTransaction.replace(R.id.base_content, civilizationFragment);
         fragmentTransaction.commit();
-    }
+    }*/
 
     @Override
     public void showLoadingDialog() {

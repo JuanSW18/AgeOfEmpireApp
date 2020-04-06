@@ -1,15 +1,15 @@
-package com.example.ageofempires.presentation.main;
+package com.example.ageofempires.presentation.civilization;
 
 import com.example.ageofempires.data.models.Civilization;
 import com.example.ageofempires.data.models.Unit;
 
 import java.util.List;
 
-public class HomeContract {
+public class CivilizationContract {
 
     interface Presenter{
         void onViewDettach();
-        void onViewAttach(HomeContract.View view);
+        void onViewAttach(CivilizationContract.View view);
         void getCivilizationList();
         void getZipList();
     }
