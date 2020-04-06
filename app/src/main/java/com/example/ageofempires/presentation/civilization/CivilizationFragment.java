@@ -1,6 +1,7 @@
 package com.example.ageofempires.presentation.civilization;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.ageofempires.R;
 import com.example.ageofempires.adapter.CivilizationAdapter;
 import com.example.ageofempires.data.models.Civilization;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.Unit;
 import com.example.ageofempires.interfaces.FragmentCallback;
 
@@ -19,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CivilizationFragment extends Fragment implements CivilizationContract.View{
 
+    private MemoryCache memoryCache;
+
     private FragmentCallback fragmentCallback;
     private CivilizationPresenter presenter;
     private CivilizationAdapter civilizationAdapter;
@@ -28,12 +32,17 @@ public class CivilizationFragment extends Fragment implements CivilizationContra
         this.fragmentCallback = fragmentCallback;
     }
 
+    public CivilizationFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
+        this.fragmentCallback = fragmentCallback;
+        this.memoryCache = memoryCache;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new CivilizationPresenter();
+            presenter = new CivilizationPresenter(memoryCache);
             getPresenter().onViewAttach(CivilizationFragment.this);
         }
     }
@@ -49,10 +58,14 @@ public class CivilizationFragment extends Fragment implements CivilizationContra
         View view = inflater.inflate(R.layout.fragment_civlization, container, false);
 
         recyclerCivilization = view.findViewById(R.id.recyclerCivilization);
-//        recyclerUnit = view.findViewById(R.id.recyclerUnit);
 
-        getPresenter().getCivilizationList();
-//        getPresenter().getZipList();
+        if( memoryCache.getCivilizationList() == null ){
+            getPresenter().getCivilizationList();
+        }else {
+            Log.d("MEMORY_CACHE", "using civilization list");
+            setCivilizationList(memoryCache.getCivilizationList());
+        }
+
         return view;
     }
 

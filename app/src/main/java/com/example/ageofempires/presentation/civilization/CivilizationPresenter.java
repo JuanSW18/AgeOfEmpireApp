@@ -3,6 +3,7 @@ package com.example.ageofempires.presentation.civilization;
 import android.util.Log;
 
 import com.example.ageofempires.data.models.CivilizationResponse;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.TestZipModel;
 import com.example.ageofempires.data.models.UnitsResponse;
 import com.example.ageofempires.data.repository.remote.Service;
@@ -19,9 +20,10 @@ import io.reactivex.schedulers.Schedulers;
 public class CivilizationPresenter implements CivilizationContract.Presenter {
 
     private CivilizationContract.View view;
+    private MemoryCache memoryCache;
 
-    public CivilizationPresenter() {
-
+    public CivilizationPresenter(MemoryCache memoryCache) {
+        this.memoryCache = memoryCache;
     }
 
     @Nullable
@@ -62,8 +64,9 @@ public class CivilizationPresenter implements CivilizationContract.Presenter {
                     @Override
                     public void onSuccess(CivilizationResponse civilizationResponse) {
                         if( isAttached() ){
+                            Log.d("** CALLING_SERVICE **", "civilization");
                             getView().setCivilizationList(civilizationResponse.getCivilizations());
-                            Log.d("CIVILIZATION_SIZE", String.valueOf(civilizationResponse.getCivilizations().size()));
+                            memoryCache.setCivilizationList(civilizationResponse.getCivilizations());
                             getView().hideLoadingDialog();
                         }
                     }

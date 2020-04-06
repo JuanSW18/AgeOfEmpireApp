@@ -1,12 +1,14 @@
 package com.example.ageofempires.presentation.unit;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ageofempires.R;
 import com.example.ageofempires.adapter.UnitAdapter;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.Unit;
 import com.example.ageofempires.interfaces.FragmentCallback;
 
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class UnitFragment extends Fragment implements UnitContract.View {
 
+    private MemoryCache memoryCache;
     private FragmentCallback fragmentCallback;
     private UnitPresenter presenter;
     private UnitAdapter unitAdapter;
@@ -28,12 +31,17 @@ public class UnitFragment extends Fragment implements UnitContract.View {
         this.fragmentCallback = fragmentCallback;
     }
 
+    public UnitFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
+        this.fragmentCallback = fragmentCallback;
+        this.memoryCache = memoryCache;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new UnitPresenter();
+            presenter = new UnitPresenter(memoryCache);
             getPresenter().onViewAttach(UnitFragment.this);
         }
     }
@@ -49,7 +57,12 @@ public class UnitFragment extends Fragment implements UnitContract.View {
 
         recyclerUnit = view.findViewById(R.id.recyclerUnit);
 
-        getPresenter().getUnitList();
+        if( memoryCache.getUnitList() == null ){
+            getPresenter().getUnitList();
+        }else {
+            Log.d("MEMORY_CACHE", "using unit list");
+            setUnitList(memoryCache.getUnitList());
+        }
 
         return view;
     }

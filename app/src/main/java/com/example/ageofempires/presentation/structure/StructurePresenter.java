@@ -1,5 +1,8 @@
 package com.example.ageofempires.presentation.structure;
 
+import android.util.Log;
+
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.StructureResponse;
 import com.example.ageofempires.data.repository.remote.Service;
 import com.example.ageofempires.data.repository.remote.request.GetRequest;
@@ -12,8 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 public class StructurePresenter implements StructureContract.Presenter {
 
     private StructureContract.View view;
+    private MemoryCache memoryCache;
 
-    public StructurePresenter() {
+    public StructurePresenter(MemoryCache memoryCache) {
+        this.memoryCache = memoryCache;
     }
 
     public StructureContract.View getView() {
@@ -52,7 +57,9 @@ public class StructurePresenter implements StructureContract.Presenter {
                     @Override
                     public void onSuccess(StructureResponse structureResponse) {
                         if( isAttached() ){
+                            Log.d("** CALLING_SERVICE **", "structure");
                             getView().setStructureList(structureResponse.getStructures());
+                            memoryCache.setStructureList(structureResponse.getStructures());
                             getView().hideLoadingDialog();
                         }
                     }

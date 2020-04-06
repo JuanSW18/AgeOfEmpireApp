@@ -1,5 +1,6 @@
 package com.example.ageofempires.adapter;
 
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.interfaces.FragmentCallback;
 import com.example.ageofempires.presentation.civilization.CivilizationFragment;
 import com.example.ageofempires.presentation.structure.StructureFragment;
@@ -17,10 +18,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
     private static int NUMBER_OF_TABS = 4;
     private FragmentCallback fragmentCallback;
+    private MemoryCache memoryCache;
 
-    public TabPagerAdapter(@NonNull FragmentManager fm,FragmentCallback fragmentCallback) {
+    public TabPagerAdapter(@NonNull FragmentManager fm, FragmentCallback fragmentCallback, MemoryCache memoryCache) {
         super(fm);
         this.fragmentCallback = fragmentCallback;
+        this.memoryCache = memoryCache;
     }
 
     @NonNull
@@ -28,13 +31,13 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch ( position ){
             case 0:
-                return new CivilizationFragment(fragmentCallback);
+                return new CivilizationFragment(fragmentCallback, memoryCache);
             case 1:
-                return new UnitFragment(fragmentCallback);
+                return new UnitFragment(fragmentCallback, memoryCache);
             case 2:
-                return new StructureFragment(fragmentCallback);
+                return new StructureFragment(fragmentCallback, memoryCache);
             case 3:
-                return new TechnologyFragment(fragmentCallback);
+                return new TechnologyFragment(fragmentCallback, memoryCache);
             default:
                 return null;
         }

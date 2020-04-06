@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.example.ageofempires.R;
 import com.example.ageofempires.adapter.TabPagerAdapter;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.interfaces.FragmentCallback;
 import com.example.ageofempires.presentation.civilization.CivilizationFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -19,6 +20,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
 
     private Context context;
     private ProgressDialog mProgressDialog;
+    private MemoryCache memoryCache;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -30,12 +32,14 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback 
 
         context = this;
 
+        memoryCache = new MemoryCache();
+
         mProgressDialog = new ProgressDialog(context);
         mProgressDialog.setMessage(getText(R.string.default_loading_text));
         mProgressDialog.setCancelable(false);
 
         //setFragments();
-        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, memoryCache);
         mViewPager = findViewById(R.id.viewPagerMenu);
         mViewPager.setAdapter(tabPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

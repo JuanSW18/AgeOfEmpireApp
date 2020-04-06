@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ageofempires.R;
 import com.example.ageofempires.adapter.StructureAdapter;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.Structure;
 import com.example.ageofempires.interfaces.FragmentCallback;
 
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class StructureFragment extends Fragment implements StructureContract.View {
 
+    private MemoryCache memoryCache;
     private StructureContract.Presenter presenter;
     private FragmentCallback fragmentCallback;
     private RecyclerView structureRecycler;
@@ -29,12 +32,17 @@ public class StructureFragment extends Fragment implements StructureContract.Vie
         this.fragmentCallback = fragmentCallback;
     }
 
+    public StructureFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
+        this.fragmentCallback = fragmentCallback;
+        this.memoryCache = memoryCache;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if ( presenter == null ){
-            presenter = new StructurePresenter();
+            presenter = new StructurePresenter(memoryCache);
             getPresenter().onViewAttach(StructureFragment.this);
         }
 
@@ -47,7 +55,12 @@ public class StructureFragment extends Fragment implements StructureContract.Vie
 
         structureRecycler = view.findViewById(R.id.recyclerStructure);
 
-        getPresenter().getStructureList();
+        if( memoryCache.getStructureList() == null ){
+            getPresenter().getStructureList();
+        }else {
+            Log.d("MEMORY_CACHE", "using structure list");
+            setStructureList(memoryCache.getStructureList());
+        }
 
         return view;
     }

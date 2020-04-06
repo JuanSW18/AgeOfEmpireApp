@@ -2,6 +2,7 @@ package com.example.ageofempires.presentation.unit;
 
 import android.util.Log;
 
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.UnitsResponse;
 import com.example.ageofempires.data.repository.remote.Service;
 import com.example.ageofempires.data.repository.remote.request.GetRequest;
@@ -14,8 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 public class UnitPresenter implements UnitContract.Presenter {
 
     private UnitContract.View view;
+    private MemoryCache memoryCache;
 
-    public UnitPresenter() {
+    public UnitPresenter(MemoryCache memoryCache) {
+        this.memoryCache = memoryCache;
     }
 
     public UnitContract.View getView() {
@@ -54,8 +57,9 @@ public class UnitPresenter implements UnitContract.Presenter {
                     @Override
                     public void onSuccess(UnitsResponse unitsResponse) {
                         if( isAttached() ){
-                            Log.d("UNITS_SIZE", String.valueOf(unitsResponse.getUnits().size()));
+                            Log.d("** CALLING_SERVICE **", "unit");
                             getView().setUnitList(unitsResponse.getUnits());
+                            memoryCache.setUnitList(unitsResponse.getUnits());
                             getView().hideLoadingDialog();
                         }
                     }

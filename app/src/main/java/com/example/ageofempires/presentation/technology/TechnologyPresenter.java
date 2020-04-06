@@ -1,5 +1,8 @@
 package com.example.ageofempires.presentation.technology;
 
+import android.util.Log;
+
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.TechnologyResponse;
 import com.example.ageofempires.data.repository.remote.Service;
 import com.example.ageofempires.data.repository.remote.request.GetRequest;
@@ -12,8 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 public class TechnologyPresenter implements TechnologyContract.Presenter {
 
     private TechnologyContract.View view;
+    private MemoryCache memoryCache;
 
-    public TechnologyPresenter() {
+    public TechnologyPresenter(MemoryCache memoryCache) {
+        this.memoryCache = memoryCache;
     }
 
     public TechnologyContract.View getView() {
@@ -52,7 +57,9 @@ public class TechnologyPresenter implements TechnologyContract.Presenter {
                     @Override
                     public void onSuccess(TechnologyResponse technologyResponse) {
                         if ( isAttached() ){
+                            Log.d("** CALLING_SERVICE **", "technology");
                             getView().setTechnologyList(technologyResponse.getTechnologies());
+                            memoryCache.setTechnologyList(technologyResponse.getTechnologies());
                             getView().hideLoadingDialog();
                         }
                     }

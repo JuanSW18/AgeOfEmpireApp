@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ageofempires.R;
 import com.example.ageofempires.adapter.TechnologyAdapter;
+import com.example.ageofempires.data.models.MemoryCache;
 import com.example.ageofempires.data.models.Technology;
 import com.example.ageofempires.interfaces.FragmentCallback;
 
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class TechnologyFragment extends Fragment implements TechnologyContract.View {
 
+    private MemoryCache memoryCache;
     private TechnologyContract.Presenter presenter;
     private FragmentCallback fragmentCallback;
     private TechnologyAdapter technologyAdapter;
@@ -29,13 +32,17 @@ public class TechnologyFragment extends Fragment implements TechnologyContract.V
         this.fragmentCallback = fragmentCallback;
     }
 
+    public TechnologyFragment(FragmentCallback fragmentCallback, MemoryCache memoryCache){
+        this.fragmentCallback = fragmentCallback;
+        this.memoryCache = memoryCache;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if( presenter == null ){
-            presenter = new TechnologyPresenter();
+            presenter = new TechnologyPresenter(memoryCache);
             getPresenter().onViewAttach(TechnologyFragment.this);
         }
 
@@ -47,7 +54,13 @@ public class TechnologyFragment extends Fragment implements TechnologyContract.V
         View view = inflater.inflate(R.layout.fragment_technology, container, false);
 
         technologyRecycler = view.findViewById(R.id.recyclerTechnology);
-        getPresenter().getTechnologyList();
+
+        if( memoryCache.getTechnologyList() == null ){
+            getPresenter().getTechnologyList();
+        }else {
+            Log.d("MEMORY_CACHE", "using technology list");
+            setTechnologyList(memoryCache.getTechnologyList());
+        }
 
         return view;
     }
