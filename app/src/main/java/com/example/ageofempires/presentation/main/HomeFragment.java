@@ -33,17 +33,20 @@ import com.example.ageofempires.data.models.Unit;
 import com.example.ageofempires.data.models.UnitsResponse;
 import com.example.ageofempires.data.repository.remote.Service;
 import com.example.ageofempires.data.repository.remote.request.GetRequest;
+import com.example.ageofempires.interfaces.FragmentCallback;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View{
 
+    private FragmentCallback fragmentCallback;
     private HomePresenter presenter;
     private CivilizationAdapter civilizationAdapter;
     RecyclerView recyclerCivilization;
     RecyclerView recyclerUnit;
 
-    public HomeFragment() {
+    public HomeFragment(FragmentCallback fragmentCallback) {
+        this.fragmentCallback = fragmentCallback;
         // Required empty public constructor
     }
 
@@ -92,6 +95,16 @@ public class HomeFragment extends Fragment implements HomeContract.View{
         UnitAdapter unitAdapter = new UnitAdapter(getContext(), list2);
         recyclerUnit.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerUnit.setAdapter(unitAdapter);
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        fragmentCallback.showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        fragmentCallback.hideLoadingDialog();
     }
 
 }

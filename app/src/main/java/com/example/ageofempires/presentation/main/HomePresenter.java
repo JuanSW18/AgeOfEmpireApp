@@ -46,6 +46,9 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void getCivilizationList() {
+        if( isAttached() ){
+            getView().showLoadingDialog();
+        }
         GetRequest getRequest = Service.getInstance(GetRequest.class);
         getRequest.getCivilications()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,6 +64,7 @@ public class HomePresenter implements HomeContract.Presenter {
                         if( isAttached() ){
                             getView().setCivilizationList(civilizationResponse.getCivilizations());
                             Log.d("CIVILIZATION_SIZE", String.valueOf(civilizationResponse.getCivilizations().size()));
+                            getView().hideLoadingDialog();
                         }
                     }
 
@@ -73,6 +77,9 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void getZipList() {
+        if( isAttached() ){
+            getView().showLoadingDialog();
+        }
         GetRequest getRequest = Service.getInstance(GetRequest.class);
 
         Single<CivilizationResponse> civilizationSingle = getRequest.getCivilications();
@@ -99,6 +106,7 @@ public class HomePresenter implements HomeContract.Presenter {
                         if( isAttached() ){
                             getView().setZipList(testZipModel.getCivilizationResponse().getCivilizations(), testZipModel.getUnitsResponse().getUnits());
                             Log.d("** END **", "SUCCESSFUL");
+                            getView().hideLoadingDialog();
                         }
                     }
 
