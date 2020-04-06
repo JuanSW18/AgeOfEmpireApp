@@ -56,7 +56,7 @@ public class UnitFragment extends Fragment implements UnitContract.View {
 
     @Override
     public void setUnitList(List<Unit> list) {
-        UnitAdapter unitAdapter = new UnitAdapter(getContext(), list);
+        unitAdapter = new UnitAdapter(getContext(), list);
         recyclerUnit.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerUnit.setAdapter(unitAdapter);
     }

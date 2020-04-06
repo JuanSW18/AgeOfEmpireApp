@@ -2,6 +2,8 @@ package com.example.ageofempires.adapter;
 
 import com.example.ageofempires.interfaces.FragmentCallback;
 import com.example.ageofempires.presentation.civilization.CivilizationFragment;
+import com.example.ageofempires.presentation.structure.StructureFragment;
+import com.example.ageofempires.presentation.technology.TechnologyFragment;
 import com.example.ageofempires.presentation.unit.UnitFragment;
 import com.example.ageofempires.utils.Constants;
 
@@ -13,7 +15,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
-    private static int NUMBER_OF_TABS = 2;
+    private static int NUMBER_OF_TABS = 4;
     private FragmentCallback fragmentCallback;
 
     public TabPagerAdapter(@NonNull FragmentManager fm,FragmentCallback fragmentCallback) {
@@ -29,6 +31,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 return new CivilizationFragment(fragmentCallback);
             case 1:
                 return new UnitFragment(fragmentCallback);
+            case 2:
+                return new StructureFragment(fragmentCallback);
+            case 3:
+                return new TechnologyFragment(fragmentCallback);
             default:
                 return null;
         }
@@ -42,6 +48,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 return Constants.CIVILIZATIONS;
             case 1:
                 return Constants.UNITS;
+            case 2:
+                return Constants.STRUCTURES;
+            case 3:
+                return Constants.TECHNOLOGIES;
             default:
                 return null;
         }

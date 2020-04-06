@@ -65,7 +65,7 @@ public class CivilizationFragment extends Fragment implements CivilizationContra
 
     @Override
     public void setZipList(List<Civilization> list1, List<Unit> list2) {
-        CivilizationAdapter civilizationAdapter = new CivilizationAdapter(getContext(), list1);
+        civilizationAdapter = new CivilizationAdapter(getContext(), list1);
         recyclerCivilization.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerCivilization.setAdapter(civilizationAdapter);
 
